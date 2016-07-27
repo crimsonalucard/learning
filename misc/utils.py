@@ -7,11 +7,11 @@ from matrix.matrix import Matrix
 def matrix_application(func):
     def func_wrapper(*parameters):
         if isinstance(parameters[0], Matrix) and len(parameters) == 1:
-            return Matrix([[func(col) for col in row] for row in parameters[0]])
+            return Matrix([[func(col) for col in row] for row in parameters[0].matrix])
         else:
             return func(*parameters)
-
-            
+    return func_wrapper
+     
 
 
 

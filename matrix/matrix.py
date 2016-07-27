@@ -1,6 +1,9 @@
 class Matrix(object):
     def __init__(self, list_of_rows):
-        self.matrix = list_of_rows
+        if isinstance(list_of_rows, Matrix):
+            self.matrix = list_of_rows.matrix
+        else:
+            self.matrix = list_of_rows
 
     def rows(self):
         return len(self.matrix)
@@ -31,8 +34,12 @@ class Matrix(object):
     def __repr__(self):
         return "\n".join([str(row) for row in self.matrix])
 
+    def __getitem__(self, key):
+        return self.matrix[key]
+
+
     def __mul__(self, other):
-        if self.rows() != other.cols():
+        if self.cols() != other.rows():
             raise ArithmeticError
         result = []
         for row in self.matrix:

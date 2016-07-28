@@ -17,4 +17,4 @@ def matrix_application(func):
 
 @matrix_application
 def sigmoid(n):
-    return 1/(1-e**n)
+    return 1/(1+e**n)

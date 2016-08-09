@@ -32,7 +32,7 @@ class Matrix(object):
         return self + (-other)
 
     def __repr__(self):
-        return "\n".join([str(row) for row in self.matrix])
+        return "\n".join([str(row) for row in self.matrix]) + "\n"
 
     def __getitem__(self, key):
         return self.matrix[key]

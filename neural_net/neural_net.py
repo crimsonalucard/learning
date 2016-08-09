@@ -16,7 +16,7 @@ def generate_random_number(error):
 def initialize_thetas(error, *layer_lengths):
     thetas = []
     for index, layer_length in enumerate(layer_lengths[:-1]):
-        theta = Matrix([[generate_random_number(error) for node in layer_length] for next_layer in layer_lengths[index+1]])
+        theta = Matrix([[generate_random_number(error) for _ in xrange(layer_length)] for _ in xrange(layer_lengths[index+1])])
         thetas.append(theta)
     return thetas
 

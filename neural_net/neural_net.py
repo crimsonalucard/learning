@@ -6,8 +6,13 @@ def create_neural_net(*thetas):
     thetas = [Matrix(theta) for theta in thetas]
     def neural_net(*xs):
         xs = Matrix([xs]).transpose()
-        return reduce(lambda acc, theta: sigmoid(theta*acc), thetas, xs)
+        return reduce(lambda acc, theta: sigmoid(theta*augment_column_matrix(acc,1)), thetas, xs)
     return neural_net
+
+def augment_column_matrix(column_matrix, num):
+    return Matrix(column_matrix.matrix + [[num]])
+
+
 
 #generate random number between (-error, error)
 def generate_random_number(error):

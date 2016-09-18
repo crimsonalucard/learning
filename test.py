@@ -7,3 +7,8 @@ print(x(1,1))
 
 random_stuff = initialize_thetas(2, 4, 5, 3)
 print(random_stuff)
+
+
+print("testing forward propogator")
+y = create_forward_propogater([[0,0,0],[0,0,0]],[[0,0,0],[0,0,0]])
+print(y(1,1))

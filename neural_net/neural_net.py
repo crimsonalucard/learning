@@ -8,7 +8,7 @@ def create_neural_net(*thetas):
     thetas = [Matrix(theta) for theta in thetas]
     def neural_net(*xs):
         if len(xs) != len(thetas[0][0]) - 1:
-            raise ValueError("neural net only excepts {0} inputs".format(len(thetas[0][0]))) 
+            raise ValueError("neural net only accepts {0} inputs".format(len(thetas[0][0]))) 
         xs = Matrix([xs]).transpose()
         return reduce(lambda acc, theta: sigmoid(theta*augment_column_matrix(acc,1)), thetas, xs)
     return neural_net
@@ -29,7 +29,9 @@ def initialize_thetas(error, *layer_lengths):
         thetas.append(theta)
     return thetas
 
-def create_forward_propogater(thetas):
+
+#should return all activation values for each layer.
+def create_forward_propogater(*thetas):
     neural_nets = [create_neural_net(theta) for theta in thetas]
     def forward_propagater(*xs):
         xs = Matrix([xs]).transpose()

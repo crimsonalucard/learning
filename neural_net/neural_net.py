@@ -2,9 +2,13 @@ from matrix.matrix import Matrix
 from misc.utils import sigmoid
 from random import random
 
+
+#creates neural net that takes n inputs from thetas with n+1 columns
 def create_neural_net(*thetas):
     thetas = [Matrix(theta) for theta in thetas]
     def neural_net(*xs):
+        if len(xs) != len(thetas[0][0]) - 1:
+            raise ValueError("neural net only excepts {0} inputs".format(len(thetas[0][0]))) 
         xs = Matrix([xs]).transpose()
         return reduce(lambda acc, theta: sigmoid(theta*augment_column_matrix(acc,1)), thetas, xs)
     return neural_net

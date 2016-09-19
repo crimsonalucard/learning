@@ -38,6 +38,9 @@ class Matrix(object):
     def __getitem__(self, key):
         return self.matrix[key]
 
+    def __iter__(self):
+        return iter(reduce(lambda acc, row: acc + row, self.matrix, []))
+
 
     def __mul__(self, other):
         if self.cols() != other.rows():

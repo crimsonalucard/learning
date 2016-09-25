@@ -1,3 +1,6 @@
+from functools import reduce
+from numbers import Number
+
 class Matrix(object):
     def __init__(self, list_of_rows):
         if isinstance(list_of_rows, Matrix):
@@ -29,7 +32,12 @@ class Matrix(object):
         return Matrix([[-i for i in row] for row in self.matrix])
 
     def __sub__(self, other):
+        if isinstance(other, Number):
+            other = Matrix([[other for _ in row] for row in self.matrix])
         return self + (-other)
+
+    def __rsub__(self,other):
+        return -self.__sub__(other)
 
     def __repr__(self):
         format_numbers = lambda nums : " ".join(["{: .2f}".format(num) for num in nums])
@@ -40,9 +48,14 @@ class Matrix(object):
 
     def __iter__(self):
         return iter(reduce(lambda acc, row: acc + row, self.matrix, []))
+    
+    def __mul__(self,other):
+        if self.cols() != other.cols() or self.rows() != other.rows():
+            raise ArithmeticError
+        return Matrix([[num1*num2 for num1, num2 in zip(row1, row2)] for row1, row2 in zip(self.matrix, other.matrix)])
 
 
-    def __mul__(self, other):
+    def __matmul__(self, other):
         if self.cols() != other.rows():
             raise ArithmeticError
         result = []

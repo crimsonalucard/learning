@@ -46,5 +46,15 @@ def create_forward_propogator(*thetas):
         return result
     return forward_propogator
 
+def create_backward_propogator(*thetas, cost_function, derivative_cost, activation_function, derivative_activation):
+    reversed_thetas = reversed(thetas)
+    forward_propogator = create_forward_propogator(*thetas)
+    
+    def backward_propogate(*xs):
+        propogated_values = forward_propogator(*xs)
+        activations = reversed([activations for activations, _ in propogated_values])
+        zetas = reversed([zeta for _, zeta in propogated_values])
+        initial_error = derivative_cost(activations[0]) * derivative_activation(zetas[0])
+        return reduce(lambda acc, x: [(x[0].transpose() @ acc[0]) * derivative_activation(x[1])] + acc, zip(thetas, zetas[1:]), [initial_error])
 
 

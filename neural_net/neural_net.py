@@ -1,10 +1,9 @@
 #/usr/bin/env python3
 
 from matrix.matrix import Matrix
-from misc.utils import sigmoid
+from misc.utils import sigmoid, sigmoid_derivative, square_error, square_error_derivative 
 from random import random
 from functools import reduce
-
 
 #creates neural net that takes n inputs from thetas with n+1 columns
 def create_neural_net(*thetas, **kwargs):
@@ -56,5 +55,3 @@ def create_backward_propogator(*thetas, cost_function, derivative_cost, activati
         zetas = reversed([zeta for _, zeta in propogated_values])
         initial_error = derivative_cost(activations[0]) * derivative_activation(zetas[0])
         return reduce(lambda acc, x: [(x[0].transpose() @ acc[0]) * derivative_activation(x[1])] + acc, zip(thetas, zetas[1:]), [initial_error])
-
-

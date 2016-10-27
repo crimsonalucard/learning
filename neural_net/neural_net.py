@@ -11,7 +11,7 @@ def create_neural_net(*thetas, **kwargs):
     thetas = [Matrix(theta) for theta in thetas]
     def neural_net(*xs):
         if len(xs) != len(thetas[0][0]) - 1:
-            raise ValueError("There were {0} inputs. The neural net only accepts {1} inputs".format(len(xs), len(thetas[0][0]))) 
+            raise ValueError("There were {0} inputs. The neural net only accepts {1} inputs".format(len(xs), len(thetas[0][0]) - 1))
         xs = Matrix([xs]).transpose()
         return reduce(lambda acc, theta: activation_function(theta @ augment_column_matrix(acc,1)), thetas, xs)
     return neural_net

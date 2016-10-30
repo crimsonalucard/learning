@@ -19,6 +19,8 @@ def matrix_application(func):
     return func_wrapper
      
 
+def flatten_matrix(matrix):
+    return Matrix([reduce(lambda acc, row: acc + row, matrix.matrix, [])])
 
 def append_matrix_to_file(matrix, fileHandler):
     for row in matrix.matrix:

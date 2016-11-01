@@ -1,6 +1,6 @@
 #/usr/bin/env python3
 
-from matrix.matrix import Matrix
+from matrix.matrix import Matrix, matrix_application
 from misc.utils import sigmoid, sigmoid_derivative, square_error, square_error_derivative 
 from random import random
 from functools import reduce
@@ -58,3 +58,11 @@ def create_backward_propogator(*thetas, cost_function, derivative_cost, activati
         zetas = reversed([zeta for _, zeta in propogated_values])
         initial_error = derivative_cost(activations[0]) * derivative_activation(zetas[0])
         return reduce(lambda acc, x: [(x[0].transpose() @ acc[0]) * derivative_activation(x[1])] + acc, zip(thetas, zetas[1:]), [initial_error])
+
+@matrix_application
+def quadratic_cost(output, label):
+    return ((output - label)**2.0)/2.0
+
+@matrix_application
+def quadratic_cost_derivative(output, label):
+    return output - label

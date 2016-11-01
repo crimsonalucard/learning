@@ -25,10 +25,12 @@ def augment_column_matrix(column_matrix, num):
 def generate_random_number(error):
     return random()*2*error-error
 
+
+#creates thetas; row length = next column length - 1 for bias vector, that means the neural net or propogator must augment the input with a one. 
 def initialize_thetas(error, *layer_lengths):
     thetas = []
     for index, layer_length in enumerate(layer_lengths[:-1]):
-        theta = Matrix([[generate_random_number(error) for _ in range(layer_length)] for _ in range(layer_lengths[index+1])])
+        theta = Matrix([[generate_random_number(error) for _ in range(layer_length + 1)] for _ in range(layer_lengths[index+1])])
         thetas.append(theta)
     return thetas
 
@@ -41,7 +43,8 @@ def create_forward_propogator(*thetas):
         xs = Matrix([list(xs)])
         result = [[activation_propogators[0](*xs), zeta_propogators[0](*xs)]]
         for activation_propogator, zeta_propogator in zip(activation_propogators[1:], zeta_propogators[1:]):
-            result += [[activation_propogator(*result[-1][0]),zeta_propogator(*result[-1][0])]]
+            prev_output = result[-1][0]
+            result += [[activation_propogator(*prev_output),zeta_propogator(*prev_output)]]
         return result
     return forward_propogator
 

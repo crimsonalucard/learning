@@ -66,3 +66,6 @@ def quadratic_cost(output, label):
 @matrix_application
 def quadratic_cost_derivative(output, label):
     return output - label
+
+def get_partial_derivative_of_output_layer(output_layer, label_layer, derivative_cost_function):
+    return derivative_cost_function(output_layer, label_layer) * output_layer

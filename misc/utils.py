@@ -18,6 +18,13 @@ def matrix_application(func):
             return func(*parameters)
     return func_wrapper
      
+@matrix_application
+def create_data_scaler(max_value):
+    @matrix_application
+    def data_scaler(data):
+        return data/float(max_value)
+    return data_scaler
+
 
 def flatten_matrix(matrix):
     return Matrix([reduce(lambda acc, row: acc + row, matrix.matrix, [])])

@@ -1,7 +1,7 @@
 #/usr/bin/env python3
 
-from matrix.matrix import Matrix, matrix_application
-from misc.utils import sigmoid, sigmoid_derivative, square_error, square_error_derivative 
+from matrix.matrix import Matrix 
+from misc.utils import sigmoid, sigmoid_derivative, square_error, square_error_derivative, matrix_application
 from random import random
 from functools import reduce
 

@@ -8,8 +8,10 @@ def concat_matrices_horizontal(*matrices):
 def concat_matrices_vertical(*matrices):
     pass
 
+def normalize_vector(vector, max_value):
+    return [i/float(max_value) for i in vector]
 
-#makes a num -> num function into Matrix -> Matrix
+#makes a num, num .. -> num function into Matrix, num ... -> Matrix
 def matrix_application(func):
     def func_wrapper(*parameters):
         if reduce(lambda acc, x: x and acc, [isinstance(parameter, Matrix) for parameter in parameters], True):

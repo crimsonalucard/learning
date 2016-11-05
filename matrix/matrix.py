@@ -5,8 +5,10 @@ class Matrix(object):
     def __init__(self, list_of_rows):
         if isinstance(list_of_rows, Matrix):
             self.matrix = list_of_rows.matrix
-        else:
+        elif isinstance(list_of_rows, list) and isinstance(list_of_rows[0], list):
             self.matrix = list_of_rows
+        else:
+            raise Exception("Cannot initialize matrix, type error")
 
     def rows(self):
         return len(self.matrix)

@@ -12,7 +12,7 @@ def create_neural_net(*thetas, **kwargs):
     def neural_net(*xs):
         if len(xs) != len(thetas[0][0]) - 1:
             raise ValueError("There were {0} inputs. The neural net only accepts {1} inputs".format(len(xs), len(thetas[0][0]) - 1))
-        xs = Matrix([xs]).transpose()
+        xs = Matrix([list(xs)]).transpose()
         return reduce(lambda acc, theta: activation_function(theta @ augment_column_matrix(acc,1)), thetas, xs)
     return neural_net
 
@@ -59,14 +59,13 @@ def create_backward_propogator(*thetas, cost_function, derivative_cost, activati
         initial_error = derivative_cost(activations[0]) * derivative_activation(zetas[0])
         return reduce(lambda acc, x: [(x[0].transpose() @ acc[0]) * derivative_activation(x[1])] + acc, zip(thetas, zetas[1:]), [initial_error])
 
-@matrix_application
 def quadratic_cost(output, label):
     return ((output - label)**2.0)/2.0
 
-@matrix_application
 def quadratic_cost_derivative(output, label):
     return output - label
 
+
 #δL=(aL−y)⊙σ′(zL)
-def get_error_of_output_layer(output_layer, label_layer, derivative_cost_function):
-    return derivative_cost_function(output_layer, label_layer) * output_layer
+def get_error_of_output_layer(unactivated_output_layer, activated_output_layer, label_layer, derivative_cost_function, derivative_activation_function):
+    return derivative_cost_function(unactivated_output_layer, label_layer) * sigmoid_derivative(activated_output_layer)
